@@ -69,12 +69,26 @@ async function getActivity()
     document.querySelector("#activity").innerText = data.activity;
 }
 
+// TODO hide APIKEY sen när apikey databas skite funkar
+async function getCat() {
+  const resp = await fetch( "https://api.thecatapi.com/v1/images/search?api_key=22f8569d-b07f-4144-8e33-6fd2ca3af43a", {
+    headers: {
+      Accept: "application/json",
+    },
+  });
+      const data = await resp.json();
+      console.log(data[0].url);
+
+document.querySelector("#catApi").src = data[0].url;
+}
+
 
 
 // Event listeners
 getIP("ipinfo.io?token=$TOKEN");
 getJoke();
 getActivity();
+getCat();
 
 document.getElementById("settings").addEventListener("click", settings);
 
