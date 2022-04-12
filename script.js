@@ -4,7 +4,7 @@ const Joke_URL = "https://v2.jokeapi.dev";
 const categories = ["Programming", "Misc", "Pun", "Spooky", "Christmas"];
 const params = [
     "blacklistFlags=religious",
-    "idRange=0-150"
+    "idRange=0-250"
 ];
 
 
@@ -17,23 +17,22 @@ function settings() {
 }
 
 async function getIP() {
-    // Kalla på vår php-IP-API med fetch()
-    const resp = await fetch(IP_URL);
-    // Ta emot response och omvandla till json
-    const respBody = await resp.json();
-
-    document.querySelector("#ip").innerText = respBody.ip; 
+    fetch("https://ipinfo.io/json?token=$TOKEN").then(
+        (response) => response.json()
+      ).then(
+        (jsonResponse) => document.querySelector("#ip").innerText = jsonResponse.ip + ("\n") + jsonResponse.country + (", ") +jsonResponse.city);
+      
 }
 
 
 
 async function getJoke() {
 
-    var xhr = new XMLHttpRequest();
+    const xhr = new XMLHttpRequest();
     xhr.open("GET", Joke_URL + "/joke/" + categories.join(",") + "?" + params.join("&"));
 
     xhr.onreadystatechange = function() {
-     if(xhr.readyState == 4 && xhr.status < 300) // readyState 4 means request has finished + we only want to parse the joke if the request was successful (status code lower than 300)
+     if(xhr.readyState == 4 && xhr.status < 300) 
          {
              var randomJoke = JSON.parse(xhr.responseText);
 
@@ -55,7 +54,7 @@ async function getJoke() {
 };
 
 xhr.send();
-//Källa: https://sv443.net/jokeapi/v2/#wrappers, för att få apin till att funka
+//Källa: gjort enligt https://sv443.net/jokeapi/v2/#wrappers instruktioner, Gjort med XHR för att få apin till att funka.
 }
 
 async function getActivity()
@@ -73,7 +72,7 @@ async function getActivity()
 
 
 // Event listeners
-getIP();
+getIP("ipinfo.io?token=$TOKEN");
 getJoke();
 getActivity();
 
