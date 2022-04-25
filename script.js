@@ -7,14 +7,28 @@ const params = [
     "idRange=0-250"
 ];
 
-
-
-function settings() {
-    let apiKey = localStorage.apiKey;
-    if (!apiKey) apiKey = prompt("Your api key", "No API key set");
-    else apiKey = prompt("Your api key", apiKey);
-    localStorage.setItem("apiKey", apiKey);
+//////////// API API API API ////////////
+const URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets"
+async function getWidgets() {
+  const resp = await fetch(URL, {
+    method: 'CHECKAPIKEY',
+    headers: { 'x-api-key': localStorage.getItem("apiKey") }
+  });
+  const respData = await resp.json();
 }
+
+function applyApi() {
+    localStorage.setItem("apiKey", document.querySelector('#apiKey').value);
+}
+// Fyller i APIKEYN färdigt i fältet
+if (localStorage.getItem("apiKey")) {
+  document.querySelector('#apiKey').value = localStorage.getItem("apiKey");
+}
+
+
+/////////////////////////////////////////
+
+
 
 async function getIP() {
     fetch("https://ipinfo.io/json?token=fd434b7101caae").then(
@@ -23,7 +37,6 @@ async function getIP() {
         (jsonResponse) => document.querySelector("#ip").innerText = jsonResponse.ip + ("\n") + jsonResponse.country + (", ") +jsonResponse.city+"\n GPS Coordinates: "+jsonResponse.loc);
       
 }
-
 
 
 async function getJoke() {
@@ -90,7 +103,7 @@ getJoke();
 getActivity();
 getCat();
 
-document.getElementById("settings").addEventListener("click", settings);
+document.getElementById("applyApi").addEventListener("click", applyApi);
 
 
 
