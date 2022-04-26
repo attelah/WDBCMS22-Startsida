@@ -47,16 +47,28 @@ async function getTodo() {
     }
   });
   const respData = await resp.json();
-  if (respData['error'] == "403") return;
+  if (respData['error'] == "403") {
+    document.querySelector("#todoList").innerHTML = "";
+    return;
+  } else {
 
-/*   for (todo of respData.todo) {
+    // Visa todona
+    for (todo of respData.todo) {
+
+
       document.querySelector("#todoList").innerHTML +=
-  `<li class="list-group-item d-flex justify-content-between align-items-center">
-  A list item
-  <span class="badge bg-warning rounded-pill">Viktigt!</span>
-  </li>`;
+        `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+  ${todo.title}
+  <span class="badge bg-warning rounded-pill">${todo.category_name}</span>
+  </div><div>
+    <span class="badge bg-warning rounded-pill">checkmark here</span>
+    </div>
+  </li>
+`;
+
+    }
   }
-*/
 
 }
 

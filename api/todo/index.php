@@ -34,6 +34,7 @@ if (isset($req_headers['x-api-key'])) {
 $stmt = $pdo->prepare("SELECT * FROM users WHERE api_key = ?");
 $stmt->execute([$req_headers['x-api-key']]);
 $dbresult = $stmt->fetch(PDO::FETCH_ASSOC);
+$userId = $dbresult['id'];
 
 }
 // Här kollar vi att alla requests har valid API_key header, annars ge error 403 och exit.
@@ -43,29 +44,15 @@ if (($_SERVER['REQUEST_METHOD'] == "GET" || $_SERVER['REQUEST_METHOD'] == "POST"
     exit();
 } else {
 
-    // Sök todo från databasen med hjälp av user ID
-    $stmt = $pdo->prepare("SELECT * FROM todo WHERE user_id = ?");
-    $stmt->execute([$dbresult['id']]);
-    $dbresult = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     $response = [
-        "category_id" => [$dbresult['category_id']], 
-        "title" => [],
-        "done" => [],
-        "due_date" => [],
-        "created_at" => [],
-        "updated_at" => [],
-        "sort_order" => [],
+        "todo" => []
     ];
+
+    // Sök todo från databasen med hjälp av user ID
+    $stmt = $pdo->prepare("SELECT t.*, c.category_name FROM todo t INNER JOIN category c ON t.category_id = c.id WHERE t.user_id = ?");
+    $stmt->execute([$dbresult['id']]);
+    $response['todo'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
+    // Skickar response
     echo json_encode($response);
-
-
-
-
-    //echo json_encode(["username" => $dbresult['username'], "ip_token" => $dbresult['ip_widget']]);
 }
-
-// Omvandla PHP-arrayen till JSON och skriv ut
-//    echo json_encode($response);
-
