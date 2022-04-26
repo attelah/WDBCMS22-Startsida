@@ -20,7 +20,8 @@ async function getIP() {
     fetch("https://ipinfo.io/json?token=fd434b7101caae").then(
         (response) => response.json()
       ).then(
-        (jsonResponse) => document.querySelector("#ip").innerText = jsonResponse.ip + ("\n") + jsonResponse.country + (", ") +jsonResponse.city+"\n GPS Coordinates: "+jsonResponse.loc);
+        (jsonResponse) => {document.querySelector("#ip").innerText = jsonResponse.ip + ("\n") + jsonResponse.country + (", ") +jsonResponse.city+"\n GPS Coordinates: "+jsonResponse.loc});
+        //.catch(error) => document.querySelector("#ip").innerText = ("ERROR");
       
 }
 
