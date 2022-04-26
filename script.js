@@ -1,5 +1,5 @@
 const API_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets";
-const TODO_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo"
+const TODO_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
 const IP_URL = "https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/ip/";
 
 
@@ -33,6 +33,7 @@ async function getIP() {
       ).then(
         (jsonResponse) => {document.querySelector("#ip").innerText = jsonResponse.ip + ("\n") + jsonResponse.country + (", ") +jsonResponse.city+"\n GPS Coordinates: "+jsonResponse.loc});
         //.catch(error) => document.querySelector("#ip").innerText = ("ERROR");
+      }
       
 function applyApi() {
   localStorage.setItem("apiKey", document.querySelector('#apiKey').value);
@@ -69,7 +70,7 @@ async function getTodo() {
   ${todo.title}
   <span class="badge bg-warning rounded-pill">${todo.category_name}</span>
   </div><div>
-    <span class="badge bg-warning rounded-pill">checkmark here</span>
+  <span class="link"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
     </div>
   </li>
 `;
@@ -155,3 +156,15 @@ getJoke();
 getActivity();
 getCat();
 document.getElementById("applyApi").addEventListener("click", applyApi);
+// Lyssna på Taskens ikon
+//document.querySelector('#todoList').addEventListener('click', (event) => {
+  
+  // här ska ikonen bytas ut till en röd x-ikon efter att man klickat tasken "gjord". Sen när man klickar den på nytt så ska tasken deletas i stilen: 
+
+  /*document.querySelector('#bookings').addEventListener('click', (event) => {
+  
+    if (event.target.getAttribute("data-del")) {
+      delBooking(event.target.getAttribute("data-del"));
+    }
+  
+  }*/
