@@ -36,7 +36,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button id="applyApi" type="button" class="btn btn-primary">Apply</button>
+          <button id="applyApi" type="button" data-bs-dismiss="modal" class="btn btn-primary">Apply</button>
         </div>
       </div>
     </div>
@@ -46,13 +46,14 @@
     <div class="row-12">
       <h1 color="turquise">Min Startsida</h1>
       <div class="position-absolute top-0 end-0 m-2">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal">
+        <button type="button" id="settingsButton" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settingsModal">
           Settings
         </button>
+        <br><span id="errorText"></span>
       </div>
     </div>
 
-    <div class="row">
+    <div class="row g-2">
       <div class="col-4">
 
         <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
@@ -90,19 +91,7 @@
             <h1>To-Do</h1>
           </div>
           <div class="card" style>
-            <ul class="list-group">
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                A list item
-                <span class="badge bg-warning rounded-pill">Viktigt!</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                A second list item
-                <span class="badge bg-primary rounded-pill">Hushåll</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                A third list item
-                <span class="badge bg-info rounded-pill">Jobb</span>
-              </li>
+            <ul class="list-group" id="todoList">
             </ul>
           </div>
           <br>

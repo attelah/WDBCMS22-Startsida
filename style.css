@@ -2,3 +2,7 @@ body {
     background: url("./background.jpg") no-repeat center center fixed;
     background-size: cover;
 }
+#errorText {
+    color: red;
+    font-size: 20px;
+}
