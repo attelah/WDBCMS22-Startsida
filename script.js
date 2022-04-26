@@ -27,14 +27,6 @@ async function getWidgets() {
   }
 }
 
-async function getIP() {
-    fetch("https://ipinfo.io/json?token=fd434b7101caae").then(
-        (response) => response.json()
-      ).then(
-        (jsonResponse) => {document.querySelector("#ip").innerText = jsonResponse.ip + ("\n") + jsonResponse.country + (", ") +jsonResponse.city+"\n GPS Coordinates: "+jsonResponse.loc});
-        //.catch(error) => document.querySelector("#ip").innerText = ("ERROR");
-      }
-      
 function applyApi() {
   localStorage.setItem("apiKey", document.querySelector('#apiKey').value);
   getWidgets();
@@ -63,18 +55,29 @@ async function getTodo() {
     // Visa todona
     for (todo of respData.todo) {
 
-
-      document.querySelector("#todoList").innerHTML +=
-        `<li class="list-group-item d-flex justify-content-between align-items-center">
+      if (todo.done) {
+        document.querySelector("#todoList").innerHTML +=
+          `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
-  ${todo.title}
-  <span class="badge bg-warning rounded-pill">${todo.category_name}</span>
+        ${todo.title}
+  <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
   </div><div>
-  <span class="link"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
+  <span class="link" task-id="${todo.id}"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
     </div>
   </li>
 `;
-
+      } else {
+        document.querySelector("#todoList").innerHTML +=
+          `<li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+        <s>${todo.title}
+  <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
+  </div><div>
+  <span class="link" task-id="${todo.id}"><span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg" ></i></span></span></s>
+    </div>
+  </li>
+`;
+      }
     }
   }
 
@@ -157,14 +160,11 @@ getActivity();
 getCat();
 document.getElementById("applyApi").addEventListener("click", applyApi);
 // Lyssna på Taskens ikon
-//document.querySelector('#todoList').addEventListener('click', (event) => {
-  
-  // här ska ikonen bytas ut till en röd x-ikon efter att man klickat tasken "gjord". Sen när man klickar den på nytt så ska tasken deletas i stilen: 
 
-  /*document.querySelector('#bookings').addEventListener('click', (event) => {
-  
-    if (event.target.getAttribute("data-del")) {
-      delBooking(event.target.getAttribute("data-del"));
-    }
-  
-  }*/
+document.querySelector('link').addEventListener('click', (event) => {
+
+  if (event.target.getAttribute("task-id")) {
+    //delBooking(event.target.getAttribute("task-id"));
+    console.log(event.target.getAttribute("task-id"));
+  }
+});
