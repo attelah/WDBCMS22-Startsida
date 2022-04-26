@@ -70,7 +70,7 @@ async function getTodo() {
   ${todo.title}
   <span class="badge bg-warning rounded-pill">${todo.category_name}</span>
   </div><div>
-  <span class="link"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
+  <span class="link"><span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg"></i></span></span>
     </div>
   </li>
 `;
@@ -157,14 +157,12 @@ getActivity();
 getCat();
 document.getElementById("applyApi").addEventListener("click", applyApi);
 // Lyssna på Taskens ikon
-//document.querySelector('#todoList').addEventListener('click', (event) => {
+document.querySelector('#todoList').addEventListener('click', (event) => {
   
-  // här ska ikonen bytas ut till en röd x-ikon efter att man klickat tasken "gjord". Sen när man klickar den på nytt så ska tasken deletas i stilen: 
-
-  /*document.querySelector('#bookings').addEventListener('click', (event) => {
+  // här ska ikonen bytas ut till en röd x-ikon efter att man klickat tasken "gjord". Sen när man klickar den på nytt så ska tasken deletas i stilen (från hotel appen): 
   
     if (event.target.getAttribute("data-del")) {
       delBooking(event.target.getAttribute("data-del"));
     }
   
-  }*/
+});
