@@ -80,7 +80,7 @@
           </div>
         </div>
         <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-          <div class="card-header">Random Cat O.O</div>
+          <div class="card-header">Cute cat</div>
           <div class="card-body">
             <img id="catApi" class="card-img-bottom">
           </div>
@@ -104,7 +104,7 @@
               <form>
                 <div class="mb-3">
                   <label class="form-label" id="bold">Skriv en ny To-Do</label>
-                  <input type="text" class="form-control">
+                  <input type="text" id="toDoInput" class="form-control">
                 </div>
               </form>
             </div>
@@ -113,16 +113,16 @@
               <form>
                 <div class="mb-3">
                   <label class="form-label" id="bold">Välj aktivitetens typ</label>
-                  <select class="form-select">
-                    <option>Hushåll</option>
-                    <option>Jobb</option>
-                    <option>Hälsa</option>
-                    <option>Skola</option>
-                    <option>Viktigt!</option>
+                  <select id="toDoTag" class="form-select">
+                    <option value="5">Hushåll</option>
+                    <option value="2">Jobb</option>
+                    <option value="3">Hälsa</option>
+                    <option value="4">Skola</option>
+                    <option value="1">Viktigt!</option>
                   </select>
                   <br>
                   <div class="mx-auto" style="width: 10rem;">
-                    <button type="submit" class="btn btn-primary" style="width: 10rem;">Spara ny To-Do</button>
+                    <button type="button" class="btn btn-primary" id="submitToDo" style="width: 10rem;">Spara ny To-Do</button>
                   </div>
                 </div>
               </form>

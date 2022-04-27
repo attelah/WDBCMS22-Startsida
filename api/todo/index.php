@@ -47,13 +47,49 @@ if (($_SERVER['REQUEST_METHOD'] == "GET" || $_SERVER['REQUEST_METHOD'] == "POST"
   ];
 
   // Sök todo från databasen med hjälp av user ID
-  $stmt = $pdo->prepare("SELECT t.*, c.category_name FROM todo t INNER JOIN category c ON t.category_id = c.id WHERE t.user_id = ?");
+  $stmt = $pdo->prepare("SELECT t.*, c.category_name FROM todo t INNER JOIN category c ON t.category_id = c.id WHERE t.user_id = ? ORDER BY id desc");
   $stmt->execute([$dbresult['id']]);
   $response['todo'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
   // Skickar response
   echo json_encode($response);
 } elseif ($_SERVER['REQUEST_METHOD'] == "POST" && $req_headers['x-api-key'] == $dbresult['api_key']) {
+
+  try {
+    $stmt = $pdo->prepare("INSERT INTO
+    todo (
+    user_id,
+    category_id,
+    title,
+    done,
+    due_date,
+    created_at,
+    updated_at,
+    sort_order
+    ) VALUES (
+      :user_id,
+      :category_id,
+      :title,
+      :done,
+      now(),
+      now(),
+      now(),
+      :sort_order
+)");
+
+    $stmt->execute([
+    "user_id" => $userId,
+    "category_id" => $request_body->tag,
+    "title" => $request_body->title,
+    "done" => 'false',
+    "sort_order" => 1,
+  ]);
+    $response = ["msg" => $request_vars['title'] . " Added to database!"];
+  } catch (Exception $e) {
+    $response = ["error" => $e];
+  }
+  echo json_encode($response);
+
 } elseif ($_SERVER['REQUEST_METHOD'] == "PUT" && $req_headers['x-api-key'] == $dbresult['api_key']) {
   try {
     $stmt = $pdo->prepare("UPDATE

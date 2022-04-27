@@ -1,7 +1,7 @@
 const API_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets";
 const TODO_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
 const IP_URL = "https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/ip/";
-
+let userId;
 
 //////////// WIDGET API WIDGET API WIDGET API ////////////
 
@@ -20,6 +20,7 @@ async function getWidgets() {
     getIP();
     getTodo();
   } else {
+    userId = respData['id'];
     document.querySelector('#errorText').innerHTML = "";
     // run functions that require API key, get tokens from API
     getIP(respData['ip_token']);
@@ -178,6 +179,29 @@ async function delTask(taskId) {
   }
 }
 
+async function addToDo() {
+
+  if (!document.querySelector('#toDoInput').value) return;
+  toDoData = {
+      title: document.querySelector('#toDoInput').value,
+      tag: document.querySelector('#toDoTag').value
+  }
+
+
+  const resp = await fetch(TODO_URL + "/?userId=" + userId, {
+    method: 'POST',
+    headers: {
+      'x-api-key': localStorage.getItem("apiKey")
+    },
+    body: JSON.stringify(toDoData)
+  });
+
+
+  const respData = await resp.json();
+  console.log(respData);
+  getTodo();
+}
+
 
 // Event listeners & functions that don't require API key
 getWidgets();
@@ -195,3 +219,5 @@ document.querySelector('#todoList').addEventListener('click', (event) => {
     completeTask(event.target.getAttribute("task-id"));
   }
 });
+
+document.querySelector("#submitToDo").addEventListener('click', addToDo);

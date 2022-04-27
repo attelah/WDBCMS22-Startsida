@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == "GET" && (!isset($req_headers['x-api-key']) ||
     echo json_encode(["error" => "403"]);
     exit();
 } else {
-    echo json_encode(["username" => $dbresult['username'], "ip_token" => $dbresult['ip_widget']]);
+    echo json_encode(["username" => $dbresult['username'], "ip_token" => $dbresult['ip_widget'], "id" => $dbresult['id']]);
 }
 
 // Omvandla PHP-arrayen till JSON och skriv ut
