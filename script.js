@@ -197,4 +197,3 @@ document.querySelector('#todoList').addEventListener('click', (event) => {
     completeTask(event.target.getAttribute("task-id"));
   }
 });
-$('.datepicker').datepicker();
