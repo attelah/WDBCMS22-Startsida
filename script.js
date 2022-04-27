@@ -63,9 +63,10 @@ async function getTodo() {
           `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
         ${todo.title}
-  <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
-  </div><div>
-  <span class="badge rounded-pill bg-success" task-id="${todo.id}" done="false"><i class="bi bi-check2"></i></span>
+  <span class="badge bg-info rounded-pill mark">${todo.category_name}</span>
+  </div>
+    <div>
+    <span class="badge rounded-pill bg-success"><i class="bi bi-check2" task-id="${todo.id}" done="false"></i></span>
     </div>
   </li>
 `;
@@ -74,9 +75,10 @@ async function getTodo() {
           `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
         <s>${todo.title}
-  <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
-  </div><div>
-  <span class="link" task-id="${todo.id}" done="true"><span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg" ></i></span></span></s>
+  <span class="badge bg-info rounded-pill mark">${todo.category_name}</span>
+  </div>
+    <div>
+    <span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg" task-id="${todo.id}" done="true" ></i></span></s>
     </div>
   </li>
 `;
