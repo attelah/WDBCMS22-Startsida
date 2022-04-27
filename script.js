@@ -1,5 +1,5 @@
 const API_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets";
-const TODO_URL ="https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/todo/"; //"https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
+const TODO_URL ="https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
 const IP_URL = "https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/ip/";
 
 
@@ -63,7 +63,7 @@ async function getTodo() {
         ${todo.title}
   <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
   </div><div>
-  <span class="link" task-id="${todo.id}" done="false"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
+  <span class="badge rounded-pill bg-success" task-id="${todo.id}" done="false"><i class="bi bi-check2"></i></span>
     </div>
   </li>
 `;
@@ -191,7 +191,7 @@ document.querySelector('#todoList').addEventListener('click', (event) => {
 
   if((event.target.getAttribute("done")=="true")){
     delTask(event.target.getAttribute("task-id"));  
-  }else{
+  }else if((event.target.getAttribute("done")=="false")){
     completeTask(event.target.getAttribute("task-id")); 
   }
 });
