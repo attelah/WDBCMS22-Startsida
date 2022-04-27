@@ -154,8 +154,8 @@ async function getCat() {
 }
 async function completeTask(taskId){
   if (confirm("Har du säkert utfört To-Do:n " + taskId + " ?")){
-    const resp = await fetch(URL + "?id=" + taskId, {
-      method: 'UPDATE',
+    const resp = await fetch(TODO_URL + "?id=" + taskId, {
+      method: 'PUT',
       headers: { 'x-api-key': localStorage.getItem('apiKey') }
   });
   const respData = await resp.json();
@@ -168,7 +168,7 @@ async function completeTask(taskId){
 async function delTask(taskId) {
   if (confirm("vill du verkligen radera To-Do:n " + taskId + " ?")) {
 
-    const resp = await fetch(URL + "?id=" + taskId, {
+    const resp = await fetch(TODO_URL + "?id=" + taskId, {
       method: 'DELETE',
       headers: { 'x-api-key': localStorage.getItem('apiKey') }
     });

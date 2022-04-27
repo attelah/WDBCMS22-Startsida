@@ -57,7 +57,7 @@ if (($_SERVER['REQUEST_METHOD'] == "GET" || $_SERVER['REQUEST_METHOD'] == "POST"
     echo json_encode($response);
 }
 
-if (($_SERVER['REQUEST_METHOD'] == "UPDATE") && (!isset($req_headers['x-api-key']) || $req_headers['x-api-key'] != $dbresult['api_key'])) {
+if (($_SERVER['REQUEST_METHOD'] == "PUT") && (!isset($req_headers['x-api-key']) || $req_headers['x-api-key'] != $dbresult['api_key'])) {
     echo json_encode(["error" => "403"]);
     exit();
 } else {
