@@ -3,7 +3,7 @@
 error_reporting(E_ALL ^ E_NOTICE);
 ini_set("display_errors", 1);
 
-require_once "config.php";
+require_once "../../../../../config.php";
 
 try {
     $conn_string = "pgsql:host=" . $db_conf['host'] . ";port=5432;dbname=" . $db_conf['dbname'];

@@ -1,5 +1,5 @@
-const API_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets";
-const TODO_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
+const API_URL = "https://cgi.arcada.fi/~lahepela/Startsida/wdbcms22-projekt-1-hardtimez/api/widgets";
+const TODO_URL = "https://cgi.arcada.fi/~lahepela/Startsida/wdbcms22-projekt-1-hardtimez/api/todo";
 const IP_URL = "https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/ip/";
 let userId;
 
@@ -41,7 +41,9 @@ if (localStorage.getItem("apiKey")) {
 
 async function getTodo() {
 
-  const resp = await fetch(TODO_URL, {
+  // Filter
+  let filter = document.querySelector("#show").value;
+  const resp = await fetch(TODO_URL + "?filter=" + filter, {
     method: 'GET',
     headers: {
       'x-api-key': localStorage.getItem("apiKey")
@@ -184,9 +186,12 @@ async function delTask(taskId) {
 async function addToDo() {
 
   if (!document.querySelector('#toDoInput').value) return;
+  // https://stackoverflow.com/questions/20855482/preventing-html-and-script-injections-in-javascript
+  let title = document.querySelector('#toDoInput').value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  let tag = document.querySelector('#toDoTag').value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   toDoData = {
-      title: document.querySelector('#toDoInput').value,
-      tag: document.querySelector('#toDoTag').value
+      title: title,
+      tag: tag
   }
 
 
@@ -223,3 +228,4 @@ document.querySelector('#todoList').addEventListener('click', (event) => {
 });
 
 document.querySelector("#submitToDo").addEventListener('click', addToDo);
+document.querySelector("#show").addEventListener('change', getTodo);
