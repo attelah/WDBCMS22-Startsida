@@ -65,7 +65,7 @@ async function getTodo() {
   <span class="badge bg-info rounded-pill mark">${todo.category_name}</span>
   </div>
     <div>
-    <span class="badge rounded-pill bg-success" task-id="${todo.id}" done="false"><i class="bi bi-check2"></i></span>
+    <span class="badge rounded-pill bg-success"><i class="bi bi-check2" task-id="${todo.id}" done="false"></i></span>
     </div>
   </li>
 `;
@@ -77,7 +77,7 @@ async function getTodo() {
   <span class="badge bg-info rounded-pill mark">${todo.category_name}</span>
   </div>
     <div>
-    <span class="badge rounded-pill bg-danger" span task-id="${todo.id}" done="true"><i class="bi bi-x-lg" ></i></span></s>
+    <span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg" task-id="${todo.id}" done="true" ></i></span></s>
     </div>
   </li>
 `;
@@ -197,3 +197,4 @@ document.querySelector('#todoList').addEventListener('click', (event) => {
     completeTask(event.target.getAttribute("task-id"));
   }
 });
+$('.datepicker').datepicker();
