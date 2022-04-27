@@ -56,3 +56,43 @@ if (($_SERVER['REQUEST_METHOD'] == "GET" || $_SERVER['REQUEST_METHOD'] == "POST"
     // Skickar response
     echo json_encode($response);
 }
+
+if (($_SERVER['REQUEST_METHOD'] == "UPDATE") && (!isset($req_headers['x-api-key']) || $req_headers['x-api-key'] != $dbresult['api_key'])) {
+    echo json_encode(["error" => "403"]);
+    exit();
+} else {
+    try {
+        $stmt = $pdo->prepare("UPDATE INTO 
+          todo 
+        SET done = :true
+        WHERE id = :id"); // OBS: glöm aldrig WHERE i DELETE och UPDATE!!
+        
+        $stmt->execute([":id" => $request_vars['id'], "true" => true]);
+        $response = [ "msg" => "UPDATED " . $request_vars['id']];
+    
+      } catch (Exception $e) {
+        $response = [ "error" => $e ];
+      }
+      
+    }
+
+//Delete tasks
+if (($_SERVER['REQUEST_METHOD'] == "DELETE") && (!isset($req_headers['x-api-key']) || $req_headers['x-api-key'] != $dbresult['api_key'])) {
+    echo json_encode(["error" => "403"]);
+    exit();
+} else {
+
+    try {
+        $stmt = $pdo->prepare("DELETE FROM 
+          todo 
+        WHERE id = :id"); // OBS: glöm aldrig WHERE i DELETE och UPDATE!!
+        
+        $stmt->execute([":id" => $request_vars['id']]);
+        $response = [ "msg" => "DELETED booking " . $request_vars['id']];
+    
+      } catch (Exception $e) {
+        $response = [ "error" => $e ];
+      }
+      
+    }
+

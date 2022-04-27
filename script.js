@@ -1,5 +1,5 @@
 const API_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets";
-const TODO_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
+const TODO_URL ="https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/todo/"; //"https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
 const IP_URL = "https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/ip/";
 
 
@@ -52,33 +52,35 @@ async function getTodo() {
     return;
   } else {
 
+    let tasks_html="";
     // Visa todona
     for (todo of respData.todo) {
 
       if (todo.done) {
-        document.querySelector("#todoList").innerHTML +=
+        tasks_html+=
           `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
         ${todo.title}
   <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
   </div><div>
-  <span class="link" task-id="${todo.id}"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
+  <span class="link" task-id="${todo.id}" done="false"><span class="badge rounded-pill bg-success"><i class="bi bi-check2"></i></span></span>
     </div>
   </li>
 `;
       } else {
-        document.querySelector("#todoList").innerHTML +=
+        tasks_html+=
           `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
         <s>${todo.title}
   <span class="badge bg-warning rounded-pill mark">${todo.category_name}</span>
   </div><div>
-  <span class="link" task-id="${todo.id}"><span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg" ></i></span></span></s>
+  <span class="link" task-id="${todo.id}" done="true"><span class="badge rounded-pill bg-danger"><i class="bi bi-x-lg" ></i></span></span></s>
     </div>
   </li>
 `;
       }
     }
+    document.querySelector("#todoList").innerHTML = tasks_html;
   }
 
 }
@@ -150,7 +152,31 @@ async function getCat() {
 
   document.querySelector("#catApi").src = data[0].url;
 }
+async function completeTask(taskId){
+  if (confirm("Har du säkert utfört To-Do:n " + taskId + " ?")){
+    const resp = await fetch(URL + "?id=" + taskId, {
+      method: 'UPDATE',
+      headers: { 'x-api-key': localStorage.getItem('apiKey') }
+  });
+  const respData = await resp.json();
+  console.log(respData);
+  getTodo();
 
+  }
+}
+
+async function delTask(taskId) {
+  if (confirm("vill du verkligen radera To-Do:n " + taskId + " ?")) {
+
+    const resp = await fetch(URL + "?id=" + taskId, {
+      method: 'DELETE',
+      headers: { 'x-api-key': localStorage.getItem('apiKey') }
+    });
+    const respData = await resp.json();
+    console.log(respData);
+    getTodo();
+  }
+}
 
 
 // Event listeners & functions that don't require API key
@@ -161,10 +187,11 @@ getCat();
 document.getElementById("applyApi").addEventListener("click", applyApi);
 // Lyssna på Taskens ikon
 
-document.querySelector('link').addEventListener('click', (event) => {
+document.querySelector('#todoList').addEventListener('click', (event) => {
 
-  if (event.target.getAttribute("task-id")) {
-    //delBooking(event.target.getAttribute("task-id"));
-    console.log(event.target.getAttribute("task-id"));
+  if((event.target.getAttribute("done")=="true")){
+    delTask(event.target.getAttribute("task-id"));  
+  }else{
+    completeTask(event.target.getAttribute("task-id")); 
   }
 });
