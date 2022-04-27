@@ -60,7 +60,7 @@
         <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
           <div class="card-header">IP</div>
           <div class="card-body">
-            <h5 class="card-title">Your IP-Address and location</h5>
+            <h5 class="card-title">Your IP-Address and location:</h5>
             <p class="card-text"><span id="ip"></span></p>
           </div>
         </div>
@@ -91,19 +91,27 @@
           <div class="card-header">
             <h1>To-Do</h1>
           </div>
-          <div class="card" style>
+          <div class="row justify-content-md-center">
+          <div class="card" style="width: 34rem;" id="padding">
             <ul class="list-group" id="todoList">
             </ul>
           </div>
+          
           <br>
-
+          <div class="row justify-content-md-center">
+            <br>
           <form>
             <div class="mb-3">
-              <label class="form-label">Skriv ny ToDo</label>
+              <label class="form-label" id="bold">Skriv en ny To-Do</label>
               <input type="text" class="form-control">
-            </div>
+            </div>      
+          </form>
+        </div>
+
+          <div class="row justify-content-md-center">
+          <form>
             <div class="mb-3">
-              <label class="form-label">Välj aktivitetens typ</label>
+              <label class="form-label" id="bold">Välj aktivitetens typ</label>
               <select class="form-select">
                 <option>Hushåll</option>
                 <option>Jobb</option>
@@ -111,12 +119,15 @@
                 <option>Skola</option>
                 <option>Viktigt!</option>
               </select>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Spara</button>
-          </form>
-        </div>
-
+            <br>
+              <div class="mx-auto" style="width: 10rem;">
+                <button type="submit" class="btn btn-primary" style="width: 10rem;" >Spara ny To-Do</button>
+              </div>
+          </div>
+           </form>
+          </div>
+          <br>
+      </div>
       </div>
     </div>
   </div>
