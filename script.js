@@ -1,5 +1,5 @@
 const API_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/widgets";
-const TODO_URL ="https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
+const TODO_URL = "https://cgi.arcada.fi/~lahepela/wdbcms22-projekt-1-hardtimez/api/todo";
 const IP_URL = "https://cgi.arcada.fi/~kindstep/Startsida/wdbcms22-projekt-1-hardtimez/api/ip/";
 
 
@@ -52,12 +52,13 @@ async function getTodo() {
     return;
   } else {
 
-    let tasks_html="";
+    let tasks_html = "";
+    document.querySelector("#todoList").innerHTML = "";
     // Visa todona
     for (todo of respData.todo) {
 
-      if (todo.done) {
-        tasks_html+=
+      if (!todo.done) {
+        tasks_html +=
           `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
         ${todo.title}
@@ -68,7 +69,7 @@ async function getTodo() {
   </li>
 `;
       } else {
-        tasks_html+=
+        tasks_html +=
           `<li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
         <s>${todo.title}
@@ -152,16 +153,15 @@ async function getCat() {
 
   document.querySelector("#catApi").src = data[0].url;
 }
-async function completeTask(taskId){
-  if (confirm("Har du säkert utfört To-Do:n " + taskId + " ?")){
+async function completeTask(taskId) {
+  if (confirm("Har du säkert utfört To-Do:n " + taskId + " ?")) {
     const resp = await fetch(TODO_URL + "?id=" + taskId, {
       method: 'PUT',
       headers: { 'x-api-key': localStorage.getItem('apiKey') }
-  });
-  const respData = await resp.json();
-  console.log(respData);
-  getTodo();
-
+    });
+    const respData = await resp.json();
+    console.log(respData);
+    getTodo();
   }
 }
 
@@ -189,9 +189,9 @@ document.getElementById("applyApi").addEventListener("click", applyApi);
 
 document.querySelector('#todoList').addEventListener('click', (event) => {
 
-  if((event.target.getAttribute("done")=="true")){
-    delTask(event.target.getAttribute("task-id"));  
-  }else if((event.target.getAttribute("done")=="false")){
-    completeTask(event.target.getAttribute("task-id")); 
+  if ((event.target.getAttribute("done") == "true")) {
+    delTask(event.target.getAttribute("task-id"));
+  } else if ((event.target.getAttribute("done") == "false")) {
+    completeTask(event.target.getAttribute("task-id"));
   }
 });
